@@ -8,7 +8,7 @@ import ViteFonts from 'unplugin-fonts/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/tblinc810.github.io/',
+  base: '/',
   plugins: [
     vue(),
     vueJsx(),
