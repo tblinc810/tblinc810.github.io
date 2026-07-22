@@ -26,6 +26,9 @@ export async function GET(req: NextRequest) {
       headers: { 'Content-Type': 'text/html' }
     });
   } catch (error: any) {
+    if (error?.name === 'AbortError' || error?.message?.includes('aborted')) {
+      return new NextResponse('Media server unreachable from cloud proxy (timeout)', { status: 504 });
+    }
     console.error("Proxy error:", error?.message || error);
     return new NextResponse(error?.message || 'Proxy error', { status: 500 });
   }
