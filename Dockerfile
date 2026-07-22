@@ -12,7 +12,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # Stage 4: Production Runner
@@ -21,7 +21,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3000
+ENV PORT=10000
 ENV HOSTNAME="0.0.0.0"
 
 # Install cloudflared binary inside Docker container
@@ -37,6 +37,6 @@ COPY --from=builder /app/tunnel.sh ./tunnel.sh
 
 RUN chmod +x ./tunnel.sh
 
-EXPOSE 3000
+EXPOSE 10000
 
 CMD ["npm", "run", "start"]

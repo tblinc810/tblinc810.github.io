@@ -1,3 +1,4 @@
 #!/bin/bash
-echo "Starting Cloudflare Tunnel..."
-./cloudflared tunnel --url http://localhost:10000
+TARGET_PORT="${PORT:-10000}"
+echo "Starting Cloudflare Tunnel for port ${TARGET_PORT}..."
+cloudflared tunnel --url "http://localhost:${TARGET_PORT}"
