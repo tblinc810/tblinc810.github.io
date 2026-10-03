@@ -217,7 +217,7 @@
       aspect-ratio: 16 / 9;
     }
     
-    /* ── Empty state: full black cinematic screen ── */
+    /* ── Empty state: animated color screen ── */
     .empty-state {
       position: absolute; inset: 0;
       background: #000;
@@ -225,6 +225,36 @@
       z-index: 10;
       transition: opacity 0.3s;
       overflow: hidden;
+    }
+    /* Animated aurora background layer */
+    .empty-state::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 30%,  rgba(108,99,255,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 70%,  rgba(255,107,107,0.3) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 50% at 60% 10%,  rgba(77,150,255,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 60% at 10% 80%,  rgba(107,203,119,0.2) 0%, transparent 55%);
+      animation: auroraShift 8s ease-in-out infinite alternate;
+    }
+    .empty-state::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 70% 20%,  rgba(199,125,255,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse 65% 55% at 30% 75%,  rgba(255,211,61,0.18) 0%, transparent 55%);
+      animation: auroraShift2 10s ease-in-out infinite alternate;
+    }
+    @keyframes auroraShift {
+      0%   { opacity: 1; transform: scale(1)    rotate(0deg); }
+      33%  { opacity: .8; transform: scale(1.08) rotate(2deg); }
+      66%  { opacity: 1; transform: scale(0.95) rotate(-2deg); }
+      100% { opacity: .9; transform: scale(1.05) rotate(1deg); }
+    }
+    @keyframes auroraShift2 {
+      0%   { opacity: .7; transform: scale(1)    rotate(0deg); }
+      50%  { opacity: 1;  transform: scale(1.12) rotate(-3deg); }
+      100% { opacity: .6; transform: scale(0.92) rotate(2deg); }
     }
 
     /* CRT scanlines overlay */
