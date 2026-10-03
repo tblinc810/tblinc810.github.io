@@ -4,7 +4,8 @@
 ──────────────────────────────────────────────────────────── */
 .video-js {
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9;        /* drives box height when video is loaded */
   background: #000;
   display: block;
   font-size: inherit;          /* prevent vjs rem-based sizing issues */
@@ -210,8 +211,10 @@
       width: 100%; max-width: var(--max-w);
       background: #000; border-radius: var(--r); overflow: hidden;
       box-shadow: 0 10px 60px rgba(0,0,0,.7);
-      position: relative;
-      aspect-ratio: 16 / 9;
+      display: flex; flex-direction: column; position: relative;
+    }
+    #playerWrap.is-empty {
+      aspect-ratio: 16 / 9; /* hold shape before video loads */
     }
 
     /* ══════════════════════════════════════

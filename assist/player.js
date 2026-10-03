@@ -91,8 +91,7 @@ const vjsPlayer = videojs('vid', {
   controls:       false,   // hide the default Video.js control bar
   autoplay:       false,
   preload:        'auto',
-  fluid:          false,   // CSS controls sizing via aspect-ratio on #playerWrap
-  fill:           true,    // stretch video to fill the wrapper
+  fluid:          false,   // CSS controls sizing via aspect-ratio on .video-js
   playsinline:    true,
   html5: {
     vhs: {
