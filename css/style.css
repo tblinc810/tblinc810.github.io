@@ -38,6 +38,7 @@
       --muted:    #64748b;
       --shadow:   0 10px 30px rgba(0,0,0,0.06);
       --r:        14px;
+      --max-w:    1080px;
     }
 
     [data-theme="dark"] {
@@ -72,7 +73,7 @@
 
     /* ── Header ── */
     header {
-      width: 100%; max-width: 980px;
+      width: 100%; max-width: var(--max-w);
       display: flex; align-items: center; gap: 12px;
       margin-bottom: 36px;
     }
@@ -108,7 +109,7 @@
 
     /* ── URL card ── */
     .url-card {
-      width: 100%; max-width: 980px;
+      width: 100%; max-width: var(--max-w);
       background: var(--surf); border: 1px solid var(--border);
       border-radius: var(--r); padding: 26px 28px 22px;
       margin-bottom: 22px; box-shadow: var(--shadow);
@@ -169,7 +170,7 @@
 
     /* ── Error ── */
     .err {
-      width: 100%; max-width: 980px;
+      width: 100%; max-width: var(--max-w);
       background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3);
       border-radius: var(--r); padding: 13px 18px; color: #f87171;
       font-size: .85rem; gap: 9px; margin-top: 14px;
@@ -180,16 +181,16 @@
 
     /* ── Player wrapper ── */
     #playerWrap {
-      width: 100%; max-width: 1080px; /* PC */
+      width: 100%; max-width: var(--max-w);
       background: #000; border-radius: var(--r); overflow: hidden;
       box-shadow: 0 10px 60px rgba(0,0,0,.7);
       display: none; flex-direction: column;
     }
     @media (max-width: 900px) {
-      #playerWrap { max-width: 768px; } /* Tablet */
+      :root { --max-w: 768px; }
     }
     @media (max-width: 600px) {
-      #playerWrap { max-width: 100%; } /* Mobile */
+      :root { --max-w: 100%; }
     }
     #playerWrap.on { display: flex; }
 
