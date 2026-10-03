@@ -40,12 +40,12 @@ function setTheme(mode) {
   const tIcon = document.getElementById('themeIcon');
   if (mode === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
-    if (tIcon) tIcon.setAttribute('data-lucide', 'sun');
+    if (tIcon) tIcon.outerHTML = '<i data-lucide="sun" id="themeIcon" style="width:14px;height:14px;"></i>';
     themeLabel.textContent = 'Light Mode';
     localStorage.setItem('theme', 'dark');
   } else {
     document.documentElement.removeAttribute('data-theme');
-    if (tIcon) tIcon.setAttribute('data-lucide', 'moon');
+    if (tIcon) tIcon.outerHTML = '<i data-lucide="moon" id="themeIcon" style="width:14px;height:14px;"></i>';
     themeLabel.textContent = 'Dark Mode';
     localStorage.setItem('theme', 'light');
   }
@@ -225,7 +225,7 @@ vjsPlayer.on('click', togglePP);
 /* ── Controls ── */
 function updatePP() {
   const icon = document.getElementById('ppIcon');
-  if (icon) icon.setAttribute('data-lucide', vjsPlayer.paused() ? 'play' : 'pause');
+  if (icon) icon.outerHTML = `<i data-lucide="${vjsPlayer.paused() ? 'play' : 'pause'}" id="ppIcon" style="width:20px;height:20px;fill:currentColor;"></i>`;
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 function togglePP() { vjsPlayer.paused() ? vjsPlayer.play() : vjsPlayer.pause(); }
@@ -264,7 +264,7 @@ muteBtn.addEventListener('click', () => {
 function updateVol() {
   const muted = vjsPlayer.muted() || vjsPlayer.volume() === 0;
   const icon = document.getElementById('volIcon');
-  if (icon) icon.setAttribute('data-lucide', muted ? 'volume-x' : 'volume-2');
+  if (icon) icon.outerHTML = `<i data-lucide="${muted ? 'volume-x' : 'volume-2'}" id="volIcon" style="width:20px;height:20px;"></i>`;
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
@@ -292,7 +292,7 @@ fsBtn.addEventListener('click', () => {
 });
 document.addEventListener('fullscreenchange', () => {
   const icon = document.getElementById('fsIcon');
-  if (icon) icon.setAttribute('data-lucide', document.fullscreenElement ? 'minimize' : 'maximize');
+  if (icon) icon.outerHTML = `<i data-lucide="${document.fullscreenElement ? 'minimize' : 'maximize'}" id="fsIcon" style="width:20px;height:20px;"></i>`;
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
