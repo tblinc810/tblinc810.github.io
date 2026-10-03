@@ -1,4 +1,30 @@
+/* ── Video.js skin reset ──────────────────────────────────────
+   We supply our own control bar, so hide everything Video.js
+   renders by default and let our layout control sizing.
+──────────────────────────────────────────────────────────── */
+.video-js {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  display: block;
+  font-size: inherit;          /* prevent vjs rem-based sizing issues */
+}
+/* Hide the default Video.js control bar & big-play button */
+.video-js .vjs-control-bar,
+.video-js .vjs-big-play-button,
+.video-js .vjs-loading-spinner,
+.video-js .vjs-text-track-display { display: none !important; }
+
+/* The inner <video> must fill the wrapper */
+.video-js video { width: 100% !important; height: 100% !important; cursor: pointer; }
+
+/* Remove Video.js padding-top trick (we use aspect-ratio CSS instead) */
+.video-js.vjs-fluid,
+.video-js.vjs-16-9 { padding-top: 0 !important; }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 
     :root {
       --bg:       #f4f6fb;
@@ -27,7 +53,7 @@
       --shadow:   0 4px 40px rgba(0,0,0,.45);
     }
 
-    html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    html, body { height: 100%; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
     body::before {
       content: '';
@@ -96,7 +122,7 @@
       width: 100%; height: 50px;
       background: var(--surf2); border: 1.5px solid var(--border);
       border-radius: 10px; color: var(--text);
-      font-family: 'Inter', monospace; font-size: .875rem;
+      font-family: 'Plus Jakarta Sans', monospace; font-size: .875rem;
       padding: 0 42px 0 40px; outline: none;
       transition: border-color .2s, box-shadow .2s;
     }
@@ -117,7 +143,7 @@
       height: 50px; padding: 0 26px;
       background: linear-gradient(135deg, var(--accent), #8b5cf6);
       border: none; border-radius: 10px; color: #fff;
-      font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: .9rem; font-weight: 700;
       cursor: pointer; display: flex; align-items: center; gap: 8px;
       box-shadow: 0 4px 22px rgba(108,99,255,.45); white-space: nowrap; flex-shrink: 0;
       transition: transform .2s, box-shadow .2s, opacity .2s;
@@ -161,12 +187,8 @@
     }
     #playerWrap.on { display: flex; }
 
-    /* ── Native video ── */
-    #vid {
-      width: 100%; aspect-ratio: 16/9;
-      background: #000; display: block;
-      cursor: pointer;
-    }
+    /* ── Native video (sizing handled by .video-js at top) ── */
+
 
     /* ── Custom controls ── */
     .ctrl-bar {
@@ -200,6 +222,12 @@
     }
     .ctrl-btn:hover { color: #fff; background: rgba(255,255,255,.08); }
     .ctrl-btn svg { width: 20px; height: 20px; fill: currentColor; display: block; }
+    /* Lucide renders <svg> inside <i> — ensure size propagates */
+    .ctrl-btn i, .ctrl-btn i svg { width: 20px; height: 20px; display: block; }
+    .logo-icon i, .logo-icon i svg { width: 20px; height: 20px; display: block; fill: #fff; stroke: #fff; }
+    .url-icon i, .url-icon i svg  { display: block; }
+    .x-btn i, .x-btn i svg        { display: block; }
+    .err i, .err i svg             { display: block; flex-shrink: 0; margin-top: 1px; }
 
     .time { font-size: .75rem; color: rgba(255,255,255,.7); white-space: nowrap; font-variant-numeric: tabular-nums; }
 
@@ -212,7 +240,7 @@
 
     .speed-btn {
       background: rgba(255,255,255,.1); border: none; cursor: pointer;
-      color: #fff; border-radius: 5px; padding: 3px 8px; font-family: 'Inter', sans-serif;
+      color: #fff; border-radius: 5px; padding: 3px 8px; font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: .72rem; font-weight: 600; transition: background .15s;
     }
     .speed-btn:hover { background: rgba(108,99,255,.4); }
@@ -232,10 +260,94 @@
     footer { margin-top: 44px; color: var(--muted); font-size: .72rem; text-align: center; }
     footer b { color: var(--accent); }
 
-    @media(max-width:600px){
-      .url-row { flex-direction: column; }
-      #playBtn { justify-content: center; }
-      .vol-wrap { display: none; }
-      .notice-actions { flex-direction: column; }
-      .action-btn { justify-content: center; }
+    /* ══════════════════════════════════════
+       Mobile & Touch Support
+    ══════════════════════════════════════ */
+
+    /* ── General mobile layout ── */
+    @media (max-width: 600px) {
+      .page { padding: 16px 10px 60px; }
+
+      header { margin-bottom: 20px; gap: 8px; }
+      .logo-text { font-size: 1.1rem; }
+      .logo-tag  { display: none; }
+      .theme-toggle span { display: none; }
+      .theme-toggle { padding: 6px 10px; }
+
+      /* URL card */
+      .url-card { padding: 16px 14px 14px; }
+      .url-row  { flex-direction: column; gap: 10px; }
+      #playBtn  { width: 100%; height: 48px; justify-content: center; font-size: 1rem; }
+      #urlInput { height: 48px; font-size: .95rem; }
+
+      /* Player */
+      #vid { aspect-ratio: 16/9; }
+
+      /* Control bar — more padding for thumbs */
+      .ctrl-bar { padding: 8px 12px 12px; }
+
+      /* Seek bar — taller hit area on mobile */
+      .seek-wrap { height: 8px; margin-bottom: 10px; }
+      .seek-thumb { width: 18px; height: 18px; transform: translate(-50%,-50%) scale(1) !important; }
+
+      /* Controls row — wrap on very small screens */
+      .ctrl-row { gap: 6px; flex-wrap: wrap; }
+
+      /* Bigger icon buttons */
+      .ctrl-btn { padding: 6px; }
+      .ctrl-btn svg { width: 24px; height: 24px; }
+
+      /* Show volume on mobile (compact slider) */
+      .vol-wrap { display: flex; }
+      .vol-slider { width: 55px; }
+
+      /* Time */
+      .time { font-size: .7rem; }
+
+      /* Speed btn */
+      .speed-btn { padding: 5px 10px; font-size: .75rem; }
+
+      /* Info strip */
+      .info-strip { padding: 8px 12px; gap: 8px; }
+      .info-url   { font-size: .68rem; }
+
+      /* Double-tap overlay indicators */
+      .dbl-tap-flash {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 80px; height: 80px; border-radius: 50%;
+        background: rgba(255,255,255,.18); backdrop-filter: blur(4px);
+        display: flex; align-items: center; justify-content: center;
+        pointer-events: none; opacity: 0; transition: opacity .3s;
+        font-size: 1.5rem; color: #fff; font-weight: 700;
+      }
+      .dbl-tap-flash.left  { left: 12%; }
+      .dbl-tap-flash.right { right: 12%; }
+      .dbl-tap-flash.show  { opacity: 1; }
     }
+
+    /* ── Landscape phone — let video fill width ── */
+    @media (max-width: 900px) and (orientation: landscape) {
+      .page { padding: 8px 10px 10px; }
+      header { margin-bottom: 10px; }
+      #vid { aspect-ratio: unset; max-height: 56vw; }
+      .url-card { padding: 12px 14px; }
+      .chips { display: none; }
+    }
+
+    /* ── Safe area insets (iPhone notch / home bar) ── */
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .page   { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+      .ctrl-bar { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+    }
+
+    /* ── Swipe volume indicator ── */
+    #volIndicator {
+      position: fixed; right: 18px; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,.65); color: #fff; border-radius: 12px;
+      padding: 10px 14px; font-size: .85rem; font-weight: 600;
+      pointer-events: none; opacity: 0; transition: opacity .35s;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      z-index: 999;
+    }
+    #volIndicator.show { opacity: 1; }
+    #volIndicator svg  { width: 20px; height: 20px; fill: #fff; }
