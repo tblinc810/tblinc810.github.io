@@ -213,9 +213,20 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
-    #emptyState i {
-      animation: floatUpAndDown 3s ease-in-out infinite;
+    .empty-tv-img {
+      width: 260px; max-width: 80%;
+      animation: floatUpAndDown 3.5s ease-in-out infinite;
+      filter: drop-shadow(0 8px 32px rgba(108,99,255,0.45));
+      margin-bottom: 18px;
+      border-radius: 8px;
     }
+    .empty-title {
+      font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 6px;
+    }
+    .empty-sub {
+      font-size: .85rem; color: var(--muted);
+    }
+    .empty-sub b { color: var(--accent); }
 
     @media (max-width: 900px) {
       :root { --max-w: 768px; }
