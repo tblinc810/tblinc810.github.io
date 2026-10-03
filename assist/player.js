@@ -158,7 +158,7 @@ xBtn.addEventListener('click', () => {
   vjsPlayer.pause();
   vjsPlayer.reset();           // clears src + poster
   currentVideoUrl = '';
-  playerWrap.classList.remove('on');
+  playerWrap.classList.add('is-empty');
 });
 
 urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') load(); });
@@ -182,7 +182,7 @@ function load() {
   /* ── Tell Video.js about the new source ── */
   vjsPlayer.src({ src: raw, type: mimeFor(raw) });
 
-  playerWrap.classList.add('on');
+  playerWrap.classList.remove('is-empty');
   playerWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
   vjsPlayer.play().catch(() => {});

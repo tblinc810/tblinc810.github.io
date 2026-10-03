@@ -184,15 +184,35 @@
       width: 100%; max-width: var(--max-w);
       background: #000; border-radius: var(--r); overflow: hidden;
       box-shadow: 0 10px 60px rgba(0,0,0,.7);
-      display: none; flex-direction: column;
+      display: flex; flex-direction: column; position: relative;
+      aspect-ratio: 16 / 9;
     }
+    
+    .empty-state {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: var(--surf2); z-index: 10;
+      text-align: center; padding: 20px;
+      transition: opacity 0.3s;
+    }
+    .empty-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .empty-sub { font-size: .85rem; color: var(--muted); }
+
+    /* Hide player UI when empty */
+    #playerWrap.is-empty .video-js,
+    #playerWrap.is-empty .ctrl-bar,
+    #playerWrap.is-empty .info-strip,
+    #playerWrap.is-empty .dbl-tap-flash { display: none !important; }
+    
+    /* Hide empty state when not empty */
+    #playerWrap:not(.is-empty) .empty-state { opacity: 0; pointer-events: none; }
+
     @media (max-width: 900px) {
       :root { --max-w: 768px; }
     }
     @media (max-width: 600px) {
       :root { --max-w: 100%; }
     }
-    #playerWrap.on { display: flex; }
 
     /* ── Native video (sizing handled by .video-js at top) ── */
 

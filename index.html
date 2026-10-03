@@ -105,7 +105,13 @@
   </div>
 
   <!-- Player -->
-  <div id="playerWrap">
+  <div id="playerWrap" class="is-empty">
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state">
+      <i data-lucide="film" style="width:48px;height:48px;stroke:var(--muted);margin-bottom:12px;display:block;"></i>
+      <div class="empty-title">Ready to Stream</div>
+      <div class="empty-sub">Paste a direct video link above to get started</div>
+    </div>
 
     <!-- Video.js element — controls hidden, we use our custom bar -->
     <video
@@ -226,7 +232,7 @@
   inView('#playerWrap', ({ target }) => {
     animate(target,
       { opacity: [0, 1], y: [30, 0], scale: [0.97, 1] },
-      { duration: 0.5, easing: [0.22, 1, 0.36, 1] }
+      { duration: 0.5, delay: 0.24, easing: [0.22, 1, 0.36, 1] }
     );
   }, { amount: 0.1 });
 
