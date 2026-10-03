@@ -190,44 +190,109 @@
       aspect-ratio: 16 / 9;
     }
     
+    /* ── Empty state: full black cinematic screen ── */
     .empty-state {
       position: absolute; inset: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: var(--surf2); z-index: 10;
-      text-align: center; padding: 20px;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10;
       transition: opacity 0.3s;
+      overflow: hidden;
     }
-    .empty-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-    .empty-sub { font-size: .85rem; color: var(--muted); }
 
-    /* Hide player UI when empty */
-    #playerWrap.is-empty .video-js,
-    #playerWrap.is-empty .ctrl-bar,
-    #playerWrap.is-empty .info-strip,
-    #playerWrap.is-empty .dbl-tap-flash { display: none !important; }
-    
-    /* Hide empty state when not empty */
+    /* CRT scanlines overlay */
+    .empty-scanlines {
+      position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(255,255,255,0.025) 3px,
+        rgba(255,255,255,0.025) 4px
+      );
+      animation: scanScroll 8s linear infinite;
+    }
+    @keyframes scanScroll {
+      from { background-position: 0 0; }
+      to   { background-position: 0 100px; }
+    }
+
+    /* Centered content */
+    .empty-content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+      text-align: center; padding: 20px;
+    }
+
+    /* Pulsing icon ring */
+    .empty-logo-ring {
+      width: 80px; height: 80px; border-radius: 50%;
+      border: 2px solid rgba(108,99,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 0 rgba(108,99,255,0.5);
+      animation: ringPulse 2.4s ease-out infinite;
+    }
+    @keyframes ringPulse {
+      0%   { box-shadow: 0 0 0 0   rgba(108,99,255,0.6); border-color: rgba(108,99,255,0.6); }
+      60%  { box-shadow: 0 0 0 18px rgba(108,99,255,0);  border-color: rgba(108,99,255,0.15); }
+      100% { box-shadow: 0 0 0 0   rgba(108,99,255,0);   border-color: rgba(108,99,255,0.6); }
+    }
+
+    /* Animated headline words */
+    .empty-headline {
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      font-weight: 800; color: #fff; letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .empty-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: wordIn 0.5s forwards;
+    }
+    .empty-word:nth-child(1) { animation-delay: 0.1s; }
+    .empty-word:nth-child(2) { animation-delay: 0.25s; }
+    .empty-word:nth-child(3) {
+      animation-delay: 0.4s;
+      background: linear-gradient(135deg, #6c63ff, #ff6b6b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .empty-word:nth-child(4) { animation-delay: 0.55s; }
+    .empty-word:nth-child(5) { animation-delay: 0.7s; }
+    @keyframes wordIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hint text */
+    .empty-hint {
+      font-size: .78rem; color: rgba(255,255,255,.35);
+      letter-spacing: .06em; font-weight: 500;
+      animation: fadeInUp 0.6s 1s forwards; opacity: 0;
+    }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(8px); }
+    }
+
+    /* Blinking cursor */
+    .empty-cursor {
+      width: 2px; height: 22px;
+      background: linear-gradient(180deg, #6c63ff, #ff6b6b);
+      border-radius: 2px;
+      animation: cursorBlink 1.1s step-start infinite;
+    }
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* Hide when video is playing */
     #playerWrap:not(.is-empty) .empty-state { opacity: 0; pointer-events: none; }
-    
+
     @keyframes floatUpAndDown {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
-    .empty-tv-img {
-      width: 100%; max-width: 100%;
-      object-fit: contain;
-      animation: floatUpAndDown 3.5s ease-in-out infinite;
-      filter: drop-shadow(0 8px 32px rgba(108,99,255,0.45));
-      margin-bottom: 10px;
-      border-radius: 8px;
-    }
-    .empty-title {
-      font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 6px;
-    }
-    .empty-sub {
-      font-size: .85rem; color: var(--muted);
-    }
-    .empty-sub b { color: var(--accent); }
 
     @media (max-width: 900px) {
       :root { --max-w: 768px; }
