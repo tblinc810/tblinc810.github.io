@@ -114,33 +114,49 @@
 
   <!-- Player -->
   <div id="playerWrap" class="is-empty">
-    <!-- Empty State -->
+    <!-- Empty State: Old TV -->
     <div id="emptyState" class="empty-state">
-      <div class="empty-scanlines"></div>
-      <div class="empty-content">
-        <div class="empty-logo-ring">
-          <i data-lucide="tv-2" style="width:36px;height:36px;stroke:url(#grad1);"></i>
-          <svg width="0" height="0"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6c63ff"/><stop offset="100%" style="stop-color:#ff6b6b"/></linearGradient></defs></svg>
+      <div class="tv-wrap">
+        <!-- Antenna -->
+        <div class="tv-antenna">
+          <div class="tv-ant-left"></div>
+          <div class="tv-ant-right"></div>
         </div>
-        <p class="empty-headline"><span class="empty-word">Paste</span> <span class="empty-word">a</span> <span class="empty-word">URL</span> <span class="empty-word">to</span> <span class="empty-word">watch</span></p>
-        <p class="empty-sub2">StreamBox plays any direct video link instantly — no install needed.</p>
-        <p class="empty-hint">MP4 · MKV · WebM · AVI · MOV · TS · FLV · HLS · DASH</p>
-        <div class="empty-divider"></div>
-        <div class="empty-features">
-          <div class="empty-feat"><span class="feat-icon">⚡</span><span>Instant playback</span></div>
-          <div class="empty-feat"><span class="feat-icon">🎞️</span><span>HLS &amp; DASH streaming</span></div>
-          <div class="empty-feat"><span class="feat-icon">📺</span><span>Picture-in-Picture</span></div>
-          <div class="empty-feat"><span class="feat-icon">🔊</span><span>Volume &amp; speed control</span></div>
+        <!-- TV Body -->
+        <div class="tv-body">
+          <!-- Screen -->
+          <div class="tv-screen">
+            <canvas id="staticCanvas" class="tv-static"></canvas>
+            <div class="tv-scanlines"></div>
+            <div class="tv-glare"></div>
+            <!-- Screen content -->
+            <div class="tv-screen-content">
+              <p class="tv-channel">📺 CH 01</p>
+              <p class="tv-title">Ready to Stream</p>
+              <p class="tv-sub">Paste a direct video link above<br>to get started</p>
+              <div class="tv-blink-bar"></div>
+            </div>
+          </div>
+          <!-- TV controls strip -->
+          <div class="tv-controls">
+            <div class="tv-knob"></div>
+            <div class="tv-knob"></div>
+            <div class="tv-speaker">
+              <div class="tv-speaker-dot"></div>
+              <div class="tv-speaker-dot"></div>
+              <div class="tv-speaker-dot"></div>
+              <div class="tv-speaker-dot"></div>
+              <div class="tv-speaker-dot"></div>
+              <div class="tv-speaker-dot"></div>
+            </div>
+            <div class="tv-led"></div>
+          </div>
         </div>
-        <div class="empty-divider"></div>
-        <div class="empty-keys">
-          <span class="empty-key"><kbd>Space</kbd> Play / Pause</span>
-          <span class="empty-key"><kbd>←</kbd><kbd>→</kbd> Seek 10s</span>
-          <span class="empty-key"><kbd>↑</kbd><kbd>↓</kbd> Volume</span>
-          <span class="empty-key"><kbd>F</kbd> Fullscreen</span>
-          <span class="empty-key"><kbd>M</kbd> Mute</span>
+        <!-- TV Stand -->
+        <div class="tv-stand">
+          <div class="tv-stand-neck"></div>
+          <div class="tv-stand-base"></div>
         </div>
-        <div class="empty-cursor"></div>
       </div>
     </div>
 
