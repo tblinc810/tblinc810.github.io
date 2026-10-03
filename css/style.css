@@ -225,13 +225,13 @@
 
     /* Progress / seek */
     .seek-wrap {
-      position: relative; height: 5px; border-radius: 5px;
+      position: relative; height: 8px; border-radius: 8px;
       background: rgba(255,255,255,.15); cursor: pointer; margin-bottom: 12px;
     }
-    .seek-buf { position: absolute; top: 0; left: 0; height: 100%; background: rgba(108,99,255,.3); border-radius: 5px; pointer-events: none; }
-    .seek-prog { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 5px; pointer-events: none; }
+    .seek-buf { position: absolute; top: 0; left: 0; height: 100%; background: rgba(108,99,255,.3); border-radius: 8px; pointer-events: none; }
+    .seek-prog { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 8px; pointer-events: none; }
     .seek-thumb {
-      position: absolute; top: 50%; width: 14px; height: 14px;
+      position: absolute; top: 50%; width: 18px; height: 18px;
       background: #fff; border-radius: 50%; transform: translate(-50%,-50%) scale(0);
       transition: transform .15s; pointer-events: none;
       box-shadow: 0 0 6px rgba(108,99,255,.7);
@@ -260,7 +260,7 @@
 
     .vol-wrap { display: flex; align-items: center; gap: 6px; }
     .vol-slider {
-      width: 70px; height: 4px; border-radius: 4px;
+      width: 75px; height: 6px; border-radius: 6px;
       background: rgba(255,255,255,.2); cursor: pointer; appearance: none; outline: none;
       accent-color: var(--accent);
     }
@@ -281,8 +281,8 @@
     }
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: blink 1.8s infinite; }
     @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
-    .info-url { font-size: .75rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-    .fmt-badge { font-size: .68rem; font-weight: 700; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 2px 7px; text-transform: uppercase; flex-shrink: 0; }
+    .info-url { font-size: .8rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+    .fmt-badge { font-size: .85rem; font-weight: 800; color: var(--accent); border: 2px solid var(--accent); border-radius: 6px; padding: 3px 9px; text-transform: uppercase; flex-shrink: 0; letter-spacing: 0.05em; }
 
     footer { margin-top: 44px; color: var(--muted); font-size: .72rem; text-align: center; }
     footer b { color: var(--accent); }
@@ -314,8 +314,8 @@
       .ctrl-bar { padding: 8px 12px 12px; }
 
       /* Seek bar — taller hit area on mobile */
-      .seek-wrap { height: 8px; margin-bottom: 10px; }
-      .seek-thumb { width: 18px; height: 18px; transform: translate(-50%,-50%) scale(1) !important; }
+      .seek-wrap { height: 10px; margin-bottom: 10px; }
+      .seek-thumb { width: 22px; height: 22px; transform: translate(-50%,-50%) scale(1) !important; }
 
       /* Controls row — wrap on very small screens */
       .ctrl-row { gap: 6px; flex-wrap: wrap; }
