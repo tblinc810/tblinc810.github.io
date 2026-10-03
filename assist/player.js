@@ -19,36 +19,33 @@ const seekProg   = document.getElementById('seekProg');
 const seekThumb  = document.getElementById('seekThumb');
 
 const ppBtn      = document.getElementById('ppBtn');
-const ppIcon     = document.getElementById('ppIcon');
 const rewBtn     = document.getElementById('rewBtn');
 const fwdBtn     = document.getElementById('fwdBtn');
 const timeDisp   = document.getElementById('timeDisp');
 
 const muteBtn    = document.getElementById('muteBtn');
-const volIcon    = document.getElementById('volIcon');
 const volSlider  = document.getElementById('volSlider');
 const speedBtn   = document.getElementById('speedBtn');
 const pipBtn     = document.getElementById('pipBtn');
 const fsBtn      = document.getElementById('fsBtn');
-const fsIcon     = document.getElementById('fsIcon');
 
 const infoUrl    = document.getElementById('infoUrl');
 const fmtBadge   = document.getElementById('fmtBadge');
 
 /* ── Theme toggle ── */
 const themeToggle = document.getElementById('themeToggle');
-const themeIcon   = document.getElementById('themeIcon');
 const themeLabel  = document.getElementById('themeLabel');
 
 function setTheme(mode) {
+  const tIcon = document.getElementById('themeIcon');
   if (mode === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
-    themeIcon.setAttribute('data-lucide', 'sun');
+    if (tIcon) tIcon.setAttribute('data-lucide', 'sun');
     themeLabel.textContent = 'Light Mode';
     localStorage.setItem('theme', 'dark');
   } else {
     document.documentElement.removeAttribute('data-theme');
-    themeIcon.setAttribute('data-lucide', 'moon');
+    if (tIcon) tIcon.setAttribute('data-lucide', 'moon');
     themeLabel.textContent = 'Dark Mode';
     localStorage.setItem('theme', 'light');
   }
@@ -227,7 +224,8 @@ vjsPlayer.on('click', togglePP);
 
 /* ── Controls ── */
 function updatePP() {
-  ppIcon.setAttribute('data-lucide', vjsPlayer.paused() ? 'play' : 'pause');
+  const icon = document.getElementById('ppIcon');
+  if (icon) icon.setAttribute('data-lucide', vjsPlayer.paused() ? 'play' : 'pause');
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 function togglePP() { vjsPlayer.paused() ? vjsPlayer.play() : vjsPlayer.pause(); }
@@ -265,7 +263,8 @@ muteBtn.addEventListener('click', () => {
 });
 function updateVol() {
   const muted = vjsPlayer.muted() || vjsPlayer.volume() === 0;
-  volIcon.setAttribute('data-lucide', muted ? 'volume-x' : 'volume-2');
+  const icon = document.getElementById('volIcon');
+  if (icon) icon.setAttribute('data-lucide', muted ? 'volume-x' : 'volume-2');
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
@@ -292,7 +291,8 @@ fsBtn.addEventListener('click', () => {
   }
 });
 document.addEventListener('fullscreenchange', () => {
-  fsIcon.setAttribute('data-lucide', document.fullscreenElement ? 'minimize' : 'maximize');
+  const icon = document.getElementById('fsIcon');
+  if (icon) icon.setAttribute('data-lucide', document.fullscreenElement ? 'minimize' : 'maximize');
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
