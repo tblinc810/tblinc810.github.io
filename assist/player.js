@@ -84,8 +84,10 @@ const vjsPlayer = videojs('vid', {
   },
 });
 
-/* Convenience: underlying <video> element (for PiP / touch events) */
+/* Convenience: underlying <video> element (for PiP) */
 const vid = vjsPlayer.el().querySelector('video');
+/* The element to bind touch/click gestures to */
+const touchTarget = vjsPlayer.el();
 
 /* ── Helpers ── */
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
@@ -353,12 +355,12 @@ function showVolIndicator() {
 
 /* Double-tap to seek */
 let lastTap = 0, lastTapX = 0;
-vid.addEventListener('touchend', e => {
+touchTarget.addEventListener('touchend', e => {
   if (e.changedTouches.length !== 1) return;
   const now = Date.now(), tapX = e.changedTouches[0].clientX;
   if (now - lastTap < 300 && Math.abs(tapX - lastTapX) < 60) {
     e.preventDefault();
-    const isLeft = tapX < vid.getBoundingClientRect().left + vid.getBoundingClientRect().width / 2;
+    const isLeft = tapX < touchTarget.getBoundingClientRect().left + touchTarget.getBoundingClientRect().width / 2;
     if (isLeft) { vjsPlayer.currentTime(Math.max(0, vjsPlayer.currentTime() - 10)); showFlash(flashLeft); }
     else        { vjsPlayer.currentTime(Math.min(vjsPlayer.duration() || 0, vjsPlayer.currentTime() + 10)); showFlash(flashRight); }
     lastTap = 0;
@@ -367,11 +369,11 @@ vid.addEventListener('touchend', e => {
 
 /* Swipe up/down → volume */
 let swipeStartY = null, swipeStartVol = 1, isSwiping = false;
-vid.addEventListener('touchstart', e => {
+touchTarget.addEventListener('touchstart', e => {
   if (e.touches.length !== 1) return;
   swipeStartY = e.touches[0].clientY; swipeStartVol = vjsPlayer.volume(); isSwiping = false;
 }, { passive: true });
-vid.addEventListener('touchmove', e => {
+touchTarget.addEventListener('touchmove', e => {
   if (swipeStartY === null || e.touches.length !== 1) return;
   const dy = swipeStartY - e.touches[0].clientY;
   if (!isSwiping && Math.abs(dy) > 12) isSwiping = true;
@@ -380,12 +382,12 @@ vid.addEventListener('touchmove', e => {
   vjsPlayer.volume(newVol); vjsPlayer.muted(newVol === 0);
   volSlider.value = newVol; updateVol(); showVolIndicator();
 }, { passive: true });
-vid.addEventListener('touchend',    () => { swipeStartY = null; isSwiping = false; }, { passive: true });
-vid.addEventListener('touchcancel', () => { swipeStartY = null; isSwiping = false; }, { passive: true });
+touchTarget.addEventListener('touchend',    () => { swipeStartY = null; isSwiping = false; }, { passive: true });
+touchTarget.addEventListener('touchcancel', () => { swipeStartY = null; isSwiping = false; }, { passive: true });
 
 /* Pinch out → fullscreen */
 let pinchStartDist = null;
-vid.addEventListener('touchstart', e => {
+touchTarget.addEventListener('touchstart', e => {
   if (e.touches.length === 2) {
     pinchStartDist = Math.hypot(
       e.touches[0].clientX - e.touches[1].clientX,
@@ -393,7 +395,7 @@ vid.addEventListener('touchstart', e => {
     );
   }
 }, { passive: true });
-vid.addEventListener('touchmove', e => {
+touchTarget.addEventListener('touchmove', e => {
   if (e.touches.length !== 2 || pinchStartDist === null) return;
   const dist = Math.hypot(
     e.touches[0].clientX - e.touches[1].clientX,
@@ -401,4 +403,4 @@ vid.addEventListener('touchmove', e => {
   );
   if (dist - pinchStartDist > 60 && !document.fullscreenElement) { fsBtn.click(); pinchStartDist = null; }
 }, { passive: true });
-vid.addEventListener('touchend', () => { pinchStartDist = null; }, { passive: true });
+touchTarget.addEventListener('touchend', () => { pinchStartDist = null; }, { passive: true });
