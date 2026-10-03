@@ -180,10 +180,16 @@
 
     /* ── Player wrapper ── */
     #playerWrap {
-      width: 100%; max-width: 980px;
+      width: 100%; max-width: 1080px; /* PC */
       background: #000; border-radius: var(--r); overflow: hidden;
       box-shadow: 0 10px 60px rgba(0,0,0,.7);
       display: none; flex-direction: column;
+    }
+    @media (max-width: 900px) {
+      #playerWrap { max-width: 768px; } /* Tablet */
+    }
+    @media (max-width: 600px) {
+      #playerWrap { max-width: 100%; } /* Mobile */
     }
     #playerWrap.on { display: flex; }
 
