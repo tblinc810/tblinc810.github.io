@@ -107,6 +107,33 @@
     .theme-toggle:hover { border-color: var(--accent); transform: translateY(-1px); }
     .theme-toggle svg { width: 14px; height: 14px; fill: currentColor; }
 
+    /* ── Font size slider ── */
+    .font-slider-wrap {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--surf2); border: 1px solid var(--border);
+      border-radius: 50px; padding: 5px 12px;
+      color: var(--muted); font-size: .72rem; font-weight: 600;
+    }
+    .font-range {
+      -webkit-appearance: none; appearance: none;
+      width: 80px; height: 4px; border-radius: 4px; outline: none; cursor: pointer;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent) var(--range-pct, 37.5%), rgba(255,255,255,.15) var(--range-pct, 37.5%));
+    }
+    .font-range::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px;
+      border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 6px rgba(108,99,255,.6); cursor: pointer;
+    }
+    .font-range::-moz-range-thumb {
+      width: 14px; height: 14px; border: none; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 6px rgba(108,99,255,.6); cursor: pointer;
+    }
+    .font-size-label {
+      min-width: 34px; text-align: right;
+      color: var(--accent); font-weight: 700; font-size: .72rem;
+    }
+    @media (max-width: 600px) { .font-slider-wrap { display: none; } }
+
     /* ── URL card ── */
     .url-card {
       width: 100%; max-width: var(--max-w);
@@ -240,10 +267,14 @@
 
     /* Animated headline words */
     .empty-headline {
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-size: calc(clamp(1.6rem, 3.5vw, 2.4rem) * var(--font-scale, 1));
       font-weight: 800; color: #fff; letter-spacing: -0.02em;
-      line-height: 1.2;
+      line-height: 1.2; transition: font-size 0.2s ease;
     }
+    .empty-sub2 { font-size: calc(.88rem * var(--font-scale, 1)); transition: font-size 0.2s; }
+    .empty-hint-row { font-size: calc(.72rem * var(--font-scale, 1)); transition: font-size 0.2s; }
+    .empty-feat  { font-size: calc(.78rem * var(--font-scale, 1)); transition: font-size 0.2s; }
+    .empty-key   { font-size: calc(.68rem * var(--font-scale, 1)); transition: font-size 0.2s; }
     .empty-word {
       display: inline-block;
       opacity: 0;

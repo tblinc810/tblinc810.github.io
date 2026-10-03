@@ -60,6 +60,26 @@ themeToggle.addEventListener('click', () => {
   setTheme(isDark ? 'light' : 'dark');
 });
 
+/* ── Font Size Slider ── */
+const fontSlider    = document.getElementById('fontSlider');
+const fontSizeLabel = document.getElementById('fontSizeLabel');
+
+function applyFontScale(val) {
+  const scale = val / 100;
+  document.documentElement.style.setProperty('--font-scale', scale);
+  fontSizeLabel.textContent = val + '%';
+  // Update slider fill track
+  const pct = ((val - 70) / (150 - 70)) * 100;
+  fontSlider.style.setProperty('--range-pct', pct + '%');
+  localStorage.setItem('fontScale', val);
+}
+
+const savedFont = localStorage.getItem('fontScale') || '100';
+fontSlider.value = savedFont;
+applyFontScale(+savedFont);
+
+fontSlider.addEventListener('input', () => applyFontScale(+fontSlider.value));
+
 /* ══════════════════════════════════════════════
    Video.js initialisation
    – controls: false  → we drive everything with our own UI
