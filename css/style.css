@@ -206,6 +206,14 @@
     
     /* Hide empty state when not empty */
     #playerWrap:not(.is-empty) .empty-state { opacity: 0; pointer-events: none; }
+    
+    @keyframes floatUpAndDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    #emptyState i {
+      animation: floatUpAndDown 3s ease-in-out infinite;
+    }
 
     @media (max-width: 900px) {
       :root { --max-w: 768px; }
