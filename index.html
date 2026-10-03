@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +10,9 @@
   <!-- Google Font: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+    rel="stylesheet" />
 
   <!-- Tailwind CSS v3 (Play CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,10 +25,10 @@
             sans: ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui'],
           },
           colors: {
-            accent:  '#6c63ff',
+            accent: '#6c63ff',
             accent2: '#ff6b6b',
-            surf:    '#ffffff',
-            surf2:   '#edf2f9',
+            surf: '#ffffff',
+            surf2: '#edf2f9',
           },
           boxShadow: {
             glow: '0 0 22px rgba(108,99,255,0.35)',
@@ -34,7 +37,7 @@
           keyframes: {
             blink: {
               '0%,100%': { opacity: '1', transform: 'scale(1)' },
-              '50%':      { opacity: '0.4', transform: 'scale(1.4)' },
+              '50%': { opacity: '0.4', transform: 'scale(1.4)' },
             },
           },
           animation: {
@@ -54,321 +57,332 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
+
 <body>
-<div class="page" id="page">
+  <div class="page" id="page">
 
-  <!-- Header -->
-  <header id="header">
-    <div class="logo-icon">
-      <i data-lucide="play" style="width:20px;height:20px;stroke:#fff;fill:#fff;"></i>
-    </div>
-    <span class="logo-text">StreamBox</span>
-    <span class="logo-tag">Native Player</span>
-
-    <!-- Font Size Slider -->
-    <div class="font-slider-wrap" title="Adjust text size">
-      <i data-lucide="type" style="width:13px;height:13px;flex-shrink:0;"></i>
-      <input id="fontSlider" type="range" min="70" max="10000" value="100" step="10" class="font-range" />
-      <span id="fontSizeLabel" class="font-size-label">100%</span>
-    </div>
-
-    <button class="theme-toggle" id="themeToggle" title="Switch Theme">
-      <i data-lucide="moon" id="themeIcon" style="width:14px;height:14px;"></i>
-      <span id="themeLabel">Dark Mode</span>
-    </button>
-  </header>
-
-  <!-- URL input card -->
-  <div class="url-card" id="urlCard">
-    <div class="url-label">Video URL</div>
-    <div class="url-row">
-      <div class="url-wrap">
-        <span class="url-icon">
-          <i data-lucide="link-2" style="width:15px;height:15px;"></i>
-        </span>
-        <input id="urlInput" type="url" placeholder="Paste video URL here…" autocomplete="off" spellcheck="false" />
-        <button class="x-btn" id="xBtn" aria-label="Clear">
-          <i data-lucide="x" style="width:13px;height:13px;"></i>
-        </button>
+    <!-- Header -->
+    <header id="header">
+      <div class="logo-icon">
+        <i data-lucide="play" style="width:20px;height:20px;stroke:#fff;fill:#fff;"></i>
       </div>
-      <button id="playBtn">
-        <i data-lucide="play" style="width:16px;height:16px;stroke:#fff;fill:#fff;"></i>
-        Play
+      <span class="logo-text">StreamBox</span>
+      <span class="logo-tag">Native Player</span>
+
+      <!-- Font Size Slider -->
+      <div class="font-slider-wrap" title="Adjust text size">
+        <i data-lucide="type" style="width:13px;height:13px;flex-shrink:0;"></i>
+        <input id="fontSlider" type="range" min="70" max="10000" value="100" step="10" class="font-range" />
+        <span id="fontSizeLabel" class="font-size-label">100%</span>
+      </div>
+
+      <button class="theme-toggle" id="themeToggle" title="Switch Theme">
+        <i data-lucide="moon" id="themeIcon" style="width:14px;height:14px;"></i>
+        <span id="themeLabel">Dark Mode</span>
       </button>
-    </div>
-    <div class="chips">
-      <span class="chip">MP4</span><span class="chip">MKV</span>
-      <span class="chip">WebM</span><span class="chip">AVI</span>
-      <span class="chip">MOV</span><span class="chip">TS</span>
-      <span class="chip">FLV</span><span class="chip">WMV</span>
-      <span class="chip">OGG</span><span class="chip">HLS .m3u8</span>
-      <span class="chip">DASH .mpd</span>
-    </div>
-  </div>
+    </header>
 
-  <!-- Error banner -->
-  <div class="err" id="errBox">
-    <i data-lucide="alert-circle" style="width:17px;height:17px;flex-shrink:0;margin-top:1px;"></i>
-    <div id="errMsg"></div>
-  </div>
-
-  <!-- Player -->
-  <div id="playerWrap" class="is-empty">
-    <!-- Empty State: Old TV -->
-    <div id="emptyState" class="empty-state">
-      <div class="tv-wrap">
-        <!-- Antenna -->
-        <div class="tv-antenna">
-          <div class="tv-ant-left"></div>
-          <div class="tv-ant-right"></div>
-        </div>
-        <!-- TV Body -->
-        <div class="tv-body">
-          <!-- Screen -->
-          <div class="tv-screen">
-            <canvas id="staticCanvas" class="tv-static"></canvas>
-            <div class="tv-scanlines"></div>
-            <div class="tv-glare"></div>
-            <!-- Screen content -->
-            <div class="tv-screen-content">
-              <p class="tv-channel">📺 CH 01</p>
-              <p class="tv-title">Ready to Stream</p>
-              <p class="tv-sub">Paste a direct video link above<br>to get started</p>
-              <div class="tv-blink-bar"></div>
-            </div>
-          </div>
-          <!-- TV controls strip -->
-          <div class="tv-controls">
-            <div class="tv-knob"></div>
-            <div class="tv-knob"></div>
-            <div class="tv-speaker">
-              <div class="tv-speaker-dot"></div>
-              <div class="tv-speaker-dot"></div>
-              <div class="tv-speaker-dot"></div>
-              <div class="tv-speaker-dot"></div>
-              <div class="tv-speaker-dot"></div>
-              <div class="tv-speaker-dot"></div>
-            </div>
-            <div class="tv-led"></div>
-          </div>
-        </div>
-        <!-- TV Stand -->
-        <div class="tv-stand">
-          <div class="tv-stand-neck"></div>
-          <div class="tv-stand-base"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Video.js element — controls hidden, we use our custom bar -->
-    <video
-      id="vid"
-      class="video-js vjs-streambox"
-      preload="auto"
-      playsinline
-      webkit-playsinline
-    ></video>
-
-    <!-- Double-tap seek flash overlays (mobile) -->
-    <div class="dbl-tap-flash left"  id="flashLeft">&#8722;10s</div>
-    <div class="dbl-tap-flash right" id="flashRight">+10s</div>
-
-    <!-- Custom control bar -->
-    <div class="ctrl-bar">
-      <!-- Seek bar -->
-      <div class="seek-wrap" id="seekWrap">
-        <div class="seek-buf"  id="seekBuf"></div>
-        <div class="seek-prog" id="seekProg"></div>
-        <div class="seek-thumb" id="seekThumb"></div>
-      </div>
-
-      <!-- Controls row -->
-      <div class="ctrl-row">
-        <!-- Play/Pause -->
-        <button class="ctrl-btn" id="ppBtn" title="Play / Pause">
-          <i data-lucide="play" id="ppIcon" style="width:20px;height:20px;fill:currentColor;"></i>
-        </button>
-
-        <!-- Skip back 10s -->
-        <button class="ctrl-btn" id="rewBtn" title="Back 10s">
-          <i data-lucide="rotate-ccw" style="width:20px;height:20px;"></i>
-        </button>
-
-        <!-- Skip forward 10s -->
-        <button class="ctrl-btn" id="fwdBtn" title="Forward 10s">
-          <i data-lucide="rotate-cw" style="width:20px;height:20px;"></i>
-        </button>
-
-        <!-- Time -->
-        <span class="time" id="timeDisp">0:00 / 0:00</span>
-
-        <span class="spacer"></span>
-
-        <!-- Volume -->
-        <div class="vol-wrap">
-          <button class="ctrl-btn" id="muteBtn" title="Mute">
-            <i data-lucide="volume-2" id="volIcon" style="width:20px;height:20px;"></i>
+    <!-- URL input card -->
+    <div class="url-card" id="urlCard">
+      <div class="url-label">Video URL</div>
+      <div class="url-row">
+        <div class="url-wrap">
+          <span class="url-icon">
+            <i data-lucide="link-2" style="width:15px;height:15px;"></i>
+          </span>
+          <input id="urlInput" type="url" placeholder="Paste video URL here…" autocomplete="off" spellcheck="false" />
+          <button class="x-btn" id="xBtn" aria-label="Clear">
+            <i data-lucide="x" style="width:13px;height:13px;"></i>
           </button>
-          <input class="vol-slider" id="volSlider" type="range" min="0" max="1" step="0.02" value="1" />
         </div>
-
-        <!-- Speed -->
-        <button class="speed-btn" id="speedBtn" title="Playback speed">1×</button>
-
-        <!-- PiP -->
-        <button class="ctrl-btn" id="pipBtn" title="Picture in Picture">
-          <i data-lucide="picture-in-picture-2" style="width:20px;height:20px;"></i>
+        <button id="playBtn">
+          <i data-lucide="play" style="width:16px;height:16px;stroke:#fff;fill:#fff;"></i>
+          Play
         </button>
-
-        <!-- Fullscreen -->
-        <button class="ctrl-btn" id="fsBtn" title="Fullscreen">
-          <i data-lucide="maximize" id="fsIcon" style="width:20px;height:20px;"></i>
-        </button>
+      </div>
+      <div class="chips">
+        <span class="chip">MP4</span><span class="chip">MKV</span>
+        <span class="chip">WebM</span><span class="chip">AVI</span>
+        <span class="chip">MOV</span><span class="chip">TS</span>
+        <span class="chip">FLV</span><span class="chip">WMV</span>
+        <span class="chip">OGG</span><span class="chip">HLS .m3u8</span>
+        <span class="chip">DASH .mpd</span>
       </div>
     </div>
 
-    <!-- Info strip -->
-    <div class="info-strip">
-      <span class="live-dot"></span>
-      <span class="info-url" id="infoUrl"></span>
-      <span class="fmt-badge" id="fmtBadge">VIDEO</span>
+    <!-- Error banner -->
+    <div class="err" id="errBox">
+      <i data-lucide="alert-circle" style="width:17px;height:17px;flex-shrink:0;margin-top:1px;"></i>
+      <div id="errMsg"></div>
     </div>
+
+    <!-- Player -->
+    <div id="playerWrap" class="is-empty">
+      <!-- Empty State: Old TV -->
+      <div id="emptyState" class="empty-state">
+        <div class="tv-wrap">
+          <!-- Antenna -->
+          <div class="tv-antenna">
+            <div class="tv-ant-left"></div>
+            <div class="tv-ant-right"></div>
+          </div>
+          <!-- TV Body -->
+          <div class="tv-body">
+            <!-- Screen -->
+            <div class="tv-screen">
+              <canvas id="staticCanvas" class="tv-static"></canvas>
+              <div class="tv-scanlines"></div>
+              <div class="tv-glare"></div>
+              <!-- Screen content -->
+              <div class="tv-screen-content">
+                <p class="tv-channel">📺 CH 01</p>
+                <p class="tv-title">Ready to Stream</p>
+                <p class="tv-sub">Paste a direct video link above<br>to get started
+                <ol>
+                  <li><strong>Copy the link:</strong> Copy the full web address (<code>https://.../video.mp4</code>)
+                    where the video is hosted online.</li>
+                  <li><strong>Import by link:</strong> Go to an online transcription platform such as HappyScribe Video
+                    to Text or Vizard.ai. Select the "Paste Link / URL" option instead of uploading a local file.</li>
+                  <li><strong>Verify stream compatibility:</strong> Ensure the link points directly to a supported
+                    format like MP4, MKV, or WebM, which can be verified or previewed in web media systems like
+                    StreamBox.</li>
+                  <li><strong>Initiate processing:</strong> Click the process or transcribe button to let the remote
+                    system fetch, cache, and read the raw multimedia stream directly through its backend server.</li>
+                  <li><strong>Export text output:</strong> Once the audio transcription parsing completes, navigate to
+                    the export dashboard and select the raw text asset configuration to download your final clean text
+                    payload.</li>
+                </ol>
+                </p>
+                <div class="tv-blink-bar"></div>
+              </div>
+            </div>
+            <!-- TV controls strip -->
+            <div class="tv-controls">
+              <div class="tv-knob"></div>
+              <div class="tv-knob"></div>
+              <div class="tv-speaker">
+                <div class="tv-speaker-dot"></div>
+                <div class="tv-speaker-dot"></div>
+                <div class="tv-speaker-dot"></div>
+                <div class="tv-speaker-dot"></div>
+                <div class="tv-speaker-dot"></div>
+                <div class="tv-speaker-dot"></div>
+              </div>
+              <div class="tv-led"></div>
+            </div>
+          </div>
+          <!-- TV Stand -->
+          <div class="tv-stand">
+            <div class="tv-stand-neck"></div>
+            <div class="tv-stand-base"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video.js element — controls hidden, we use our custom bar -->
+      <video id="vid" class="video-js vjs-streambox" preload="auto" playsinline webkit-playsinline></video>
+
+      <!-- Double-tap seek flash overlays (mobile) -->
+      <div class="dbl-tap-flash left" id="flashLeft">&#8722;10s</div>
+      <div class="dbl-tap-flash right" id="flashRight">+10s</div>
+
+      <!-- Custom control bar -->
+      <div class="ctrl-bar">
+        <!-- Seek bar -->
+        <div class="seek-wrap" id="seekWrap">
+          <div class="seek-buf" id="seekBuf"></div>
+          <div class="seek-prog" id="seekProg"></div>
+          <div class="seek-thumb" id="seekThumb"></div>
+        </div>
+
+        <!-- Controls row -->
+        <div class="ctrl-row">
+          <!-- Play/Pause -->
+          <button class="ctrl-btn" id="ppBtn" title="Play / Pause">
+            <i data-lucide="play" id="ppIcon" style="width:20px;height:20px;fill:currentColor;"></i>
+          </button>
+
+          <!-- Skip back 10s -->
+          <button class="ctrl-btn" id="rewBtn" title="Back 10s">
+            <i data-lucide="rotate-ccw" style="width:20px;height:20px;"></i>
+          </button>
+
+          <!-- Skip forward 10s -->
+          <button class="ctrl-btn" id="fwdBtn" title="Forward 10s">
+            <i data-lucide="rotate-cw" style="width:20px;height:20px;"></i>
+          </button>
+
+          <!-- Time -->
+          <span class="time" id="timeDisp">0:00 / 0:00</span>
+
+          <span class="spacer"></span>
+
+          <!-- Volume -->
+          <div class="vol-wrap">
+            <button class="ctrl-btn" id="muteBtn" title="Mute">
+              <i data-lucide="volume-2" id="volIcon" style="width:20px;height:20px;"></i>
+            </button>
+            <input class="vol-slider" id="volSlider" type="range" min="0" max="1" step="0.02" value="1" />
+          </div>
+
+          <!-- Speed -->
+          <button class="speed-btn" id="speedBtn" title="Playback speed">1×</button>
+
+          <!-- PiP -->
+          <button class="ctrl-btn" id="pipBtn" title="Picture in Picture">
+            <i data-lucide="picture-in-picture-2" style="width:20px;height:20px;"></i>
+          </button>
+
+          <!-- Fullscreen -->
+          <button class="ctrl-btn" id="fsBtn" title="Fullscreen">
+            <i data-lucide="maximize" id="fsIcon" style="width:20px;height:20px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Info strip -->
+      <div class="info-strip">
+        <span class="live-dot"></span>
+        <span class="info-url" id="infoUrl"></span>
+        <span class="fmt-badge" id="fmtBadge">VIDEO</span>
+      </div>
+    </div>
+
+    <footer>Powered by <b>Native HTML5 Video</b> · StreamBox</footer>
   </div>
 
-  <footer>Powered by <b>Native HTML5 Video</b> · StreamBox</footer>
-</div>
+  <!-- Mobile swipe volume indicator -->
+  <div id="volIndicator">
+    <i data-lucide="volume-2" style="width:20px;height:20px;stroke:#fff;"></i>
+    <span id="volPct">100%</span>
+  </div>
 
-<!-- Mobile swipe volume indicator -->
-<div id="volIndicator">
-  <i data-lucide="volume-2" style="width:20px;height:20px;stroke:#fff;"></i>
-  <span id="volPct">100%</span>
-</div>
+  <!-- Motion (motion.dev vanilla) -->
+  <script type="module">
+    import { animate, inView, stagger } from 'https://cdn.jsdelivr.net/npm/motion@latest/+esm';
 
-<!-- Motion (motion.dev vanilla) -->
-<script type="module">
-  import { animate, inView, stagger } from 'https://cdn.jsdelivr.net/npm/motion@latest/+esm';
+    /* ── Lucide init (after DOM is ready) ── */
+    lucide.createIcons();
 
-  /* ── Lucide init (after DOM is ready) ── */
-  lucide.createIcons();
+    /* ─────────────────────────────────────────────
+       Entrance animations
+    ───────────────────────────────────────────── */
 
-  /* ─────────────────────────────────────────────
-     Entrance animations
-  ───────────────────────────────────────────── */
-
-  // Header slides in from top
-  animate('#header',
-    { opacity: [0, 1], y: [-28, 0] },
-    { duration: 0.55, easing: [0.22, 1, 0.36, 1] }
-  );
-
-  // URL card fades + rises slightly, staggered after header
-  animate('#urlCard',
-    { opacity: [0, 1], y: [24, 0], scale: [0.97, 1] },
-    { duration: 0.55, delay: 0.12, easing: [0.22, 1, 0.36, 1] }
-  );
-
-  // Chips stagger in
-  animate('.chip',
-    { opacity: [0, 1], y: [10, 0] },
-    { duration: 0.35, delay: stagger(0.04, { start: 0.3 }), easing: 'ease-out' }
-  );
-
-  /* ─────────────────────────────────────────────
-     Player wrapper — animate when it becomes visible
-  ───────────────────────────────────────────── */
-  inView('#playerWrap', ({ target }) => {
-    animate(target,
-      { opacity: [0, 1], y: [30, 0], scale: [0.97, 1] },
-      { duration: 0.5, delay: 0.24, easing: [0.22, 1, 0.36, 1] }
+    // Header slides in from top
+    animate('#header',
+      { opacity: [0, 1], y: [-28, 0] },
+      { duration: 0.55, easing: [0.22, 1, 0.36, 1] }
     );
-  }, { amount: 0.1 });
 
-  /* ─────────────────────────────────────────────
-     Button press micro-animations
-  ───────────────────────────────────────────── */
-  function addPressAnim(selector) {
-    document.querySelectorAll(selector).forEach(btn => {
-      btn.addEventListener('pointerdown', () => {
-        animate(btn, { scale: 0.88 }, { duration: 0.1, easing: 'ease-out' });
-      });
-      btn.addEventListener('pointerup', () => {
-        animate(btn, { scale: 1 }, { duration: 0.25, easing: [0.34, 1.56, 0.64, 1] });
-      });
-      btn.addEventListener('pointerleave', () => {
-        animate(btn, { scale: 1 }, { duration: 0.2, easing: 'ease-out' });
-      });
-    });
-  }
-
-  addPressAnim('#playBtn');
-  addPressAnim('#ppBtn');
-  addPressAnim('#rewBtn');
-  addPressAnim('#fwdBtn');
-  addPressAnim('#muteBtn');
-  addPressAnim('#pipBtn');
-  addPressAnim('#fsBtn');
-  addPressAnim('#speedBtn');
-  addPressAnim('#themeToggle');
-
-  /* ─────────────────────────────────────────────
-     Play button shimmer on hover (glow pulse)
-  ───────────────────────────────────────────── */
-  const playBtn = document.getElementById('playBtn');
-  playBtn.addEventListener('mouseenter', () => {
-    animate(playBtn,
-      { boxShadow: ['0 4px 22px rgba(108,99,255,.45)', '0 6px 36px rgba(108,99,255,.85)', '0 4px 22px rgba(108,99,255,.45)'] },
-      { duration: 0.9, repeat: Infinity, easing: 'ease-in-out' }
+    // URL card fades + rises slightly, staggered after header
+    animate('#urlCard',
+      { opacity: [0, 1], y: [24, 0], scale: [0.97, 1] },
+      { duration: 0.55, delay: 0.12, easing: [0.22, 1, 0.36, 1] }
     );
-  });
-  playBtn.addEventListener('mouseleave', () => {
-    animate(playBtn,
-      { boxShadow: '0 4px 22px rgba(108,99,255,.45)' },
-      { duration: 0.3 }
+
+    // Chips stagger in
+    animate('.chip',
+      { opacity: [0, 1], y: [10, 0] },
+      { duration: 0.35, delay: stagger(0.04, { start: 0.3 }), easing: 'ease-out' }
     );
-  });
 
-  /* ─────────────────────────────────────────────
-     Logo icon continuous gentle spin on hover
-  ───────────────────────────────────────────── */
-  const logoIcon = document.querySelector('.logo-icon');
-  logoIcon.addEventListener('mouseenter', () => {
-    animate(logoIcon, { rotate: 360 }, { duration: 0.6, easing: [0.22, 1, 0.36, 1] });
-  });
+    /* ─────────────────────────────────────────────
+       Player wrapper — animate when it becomes visible
+    ───────────────────────────────────────────── */
+    inView('#playerWrap', ({ target }) => {
+      animate(target,
+        { opacity: [0, 1], y: [30, 0], scale: [0.97, 1] },
+        { duration: 0.5, delay: 0.24, easing: [0.22, 1, 0.36, 1] }
+      );
+    }, { amount: 0.1 });
 
-  /* ─────────────────────────────────────────────
-     Error banner animate in/out
-  ───────────────────────────────────────────── */
-  const errBox = document.getElementById('errBox');
-  const observer = new MutationObserver(() => {
-    if (errBox.classList.contains('on')) {
-      animate(errBox, { opacity: [0, 1], x: [0, -6, 6, -4, 4, 0], y: [-6, 0] }, { duration: 0.4 });
+    /* ─────────────────────────────────────────────
+       Button press micro-animations
+    ───────────────────────────────────────────── */
+    function addPressAnim(selector) {
+      document.querySelectorAll(selector).forEach(btn => {
+        btn.addEventListener('pointerdown', () => {
+          animate(btn, { scale: 0.88 }, { duration: 0.1, easing: 'ease-out' });
+        });
+        btn.addEventListener('pointerup', () => {
+          animate(btn, { scale: 1 }, { duration: 0.25, easing: [0.34, 1.56, 0.64, 1] });
+        });
+        btn.addEventListener('pointerleave', () => {
+          animate(btn, { scale: 1 }, { duration: 0.2, easing: 'ease-out' });
+        });
+      });
     }
-  });
-  observer.observe(errBox, { attributes: true, attributeFilter: ['class'] });
 
-  /* ─────────────────────────────────────────────
-     Seek thumb pop on hover (CSS handles hover,
-     Motion adds the scale spring on seek start)
-  ───────────────────────────────────────────── */
-  const seekThumb = document.getElementById('seekThumb');
-  const seekWrap  = document.getElementById('seekWrap');
-  seekWrap.addEventListener('mouseenter', () => {
-    animate(seekThumb, { scale: 1 }, { duration: 0.15 });
-  });
+    addPressAnim('#playBtn');
+    addPressAnim('#ppBtn');
+    addPressAnim('#rewBtn');
+    addPressAnim('#fwdBtn');
+    addPressAnim('#muteBtn');
+    addPressAnim('#pipBtn');
+    addPressAnim('#fsBtn');
+    addPressAnim('#speedBtn');
+    addPressAnim('#themeToggle');
 
-  /* ─────────────────────────────────────────────
-     Theme toggle icon spin on click
-  ───────────────────────────────────────────── */
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    animate('#themeIcon', { rotate: [0, 180] }, { duration: 0.4, easing: [0.22, 1, 0.36, 1] });
-    // Re-init lucide after theme JS swaps innerHTML
-    setTimeout(() => lucide.createIcons(), 50);
-  });
-</script>
+    /* ─────────────────────────────────────────────
+       Play button shimmer on hover (glow pulse)
+    ───────────────────────────────────────────── */
+    const playBtn = document.getElementById('playBtn');
+    playBtn.addEventListener('mouseenter', () => {
+      animate(playBtn,
+        { boxShadow: ['0 4px 22px rgba(108,99,255,.45)', '0 6px 36px rgba(108,99,255,.85)', '0 4px 22px rgba(108,99,255,.45)'] },
+        { duration: 0.9, repeat: Infinity, easing: 'ease-in-out' }
+      );
+    });
+    playBtn.addEventListener('mouseleave', () => {
+      animate(playBtn,
+        { boxShadow: '0 4px 22px rgba(108,99,255,.45)' },
+        { duration: 0.3 }
+      );
+    });
 
-<!-- Video.js JS -->
-<script src="https://vjs.zencdn.net/8.21.1/video.min.js"></script>
+    /* ─────────────────────────────────────────────
+       Logo icon continuous gentle spin on hover
+    ───────────────────────────────────────────── */
+    const logoIcon = document.querySelector('.logo-icon');
+    logoIcon.addEventListener('mouseenter', () => {
+      animate(logoIcon, { rotate: 360 }, { duration: 0.6, easing: [0.22, 1, 0.36, 1] });
+    });
 
-<script src="assist/player.js"></script>
+    /* ─────────────────────────────────────────────
+       Error banner animate in/out
+    ───────────────────────────────────────────── */
+    const errBox = document.getElementById('errBox');
+    const observer = new MutationObserver(() => {
+      if (errBox.classList.contains('on')) {
+        animate(errBox, { opacity: [0, 1], x: [0, -6, 6, -4, 4, 0], y: [-6, 0] }, { duration: 0.4 });
+      }
+    });
+    observer.observe(errBox, { attributes: true, attributeFilter: ['class'] });
+
+    /* ─────────────────────────────────────────────
+       Seek thumb pop on hover (CSS handles hover,
+       Motion adds the scale spring on seek start)
+    ───────────────────────────────────────────── */
+    const seekThumb = document.getElementById('seekThumb');
+    const seekWrap = document.getElementById('seekWrap');
+    seekWrap.addEventListener('mouseenter', () => {
+      animate(seekThumb, { scale: 1 }, { duration: 0.15 });
+    });
+
+    /* ─────────────────────────────────────────────
+       Theme toggle icon spin on click
+    ───────────────────────────────────────────── */
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      animate('#themeIcon', { rotate: [0, 180] }, { duration: 0.4, easing: [0.22, 1, 0.36, 1] });
+      // Re-init lucide after theme JS swaps innerHTML
+      setTimeout(() => lucide.createIcons(), 50);
+    });
+  </script>
+
+  <!-- Video.js JS -->
+  <script src="https://vjs.zencdn.net/8.21.1/video.min.js"></script>
+
+  <script src="assist/player.js"></script>
 </body>
+
 </html>
