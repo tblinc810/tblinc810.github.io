@@ -69,7 +69,7 @@ function applyFontScale(val) {
   document.documentElement.style.setProperty('--font-scale', scale);
   fontSizeLabel.textContent = val + '%';
   // Update slider fill track
-  const pct = ((val - 70) / (150 - 70)) * 100;
+  const pct = ((val - 70) / (10000 - 70)) * 100;
   fontSlider.style.setProperty('--range-pct', pct + '%');
   localStorage.setItem('fontScale', val);
 }
